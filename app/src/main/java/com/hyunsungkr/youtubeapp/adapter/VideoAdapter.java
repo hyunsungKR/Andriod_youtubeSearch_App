@@ -1,6 +1,7 @@
 package com.hyunsungkr.youtubeapp.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.hyunsungkr.youtubeapp.MainActivity;
+import com.hyunsungkr.youtubeapp.PhotoActivity;
 import com.hyunsungkr.youtubeapp.R;
 import com.hyunsungkr.youtubeapp.model.Video;
 
@@ -64,6 +67,37 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder> 
             txtTitle = itemView.findViewById(R.id.txtTitle);
             txtDescription = itemView.findViewById(R.id.txtDescription);
             imgThumb = itemView.findViewById(R.id.imgThumb);
+
+            imgThumb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int index = getAdapterPosition();
+
+                    Video video = videoList.get(index);
+
+                    Intent intent = new Intent(context, PhotoActivity.class);
+                    intent.putExtra("highUrl",video.highUrl);
+
+                    context.startActivity(intent);
+
+                }
+            });
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    int index = getAdapterPosition();
+
+                    Video video = videoList.get(index);
+                    //https://www.youtube.com/watch?v=tnUslFhxRTs
+                    String url = "https://www.youtube.com/watch?v="+video.videoId;
+
+                    ((MainActivity)context).openWebPage(url);
+
+
+
+                }
+            });
         }
     }
 }
